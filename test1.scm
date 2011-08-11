@@ -27,4 +27,12 @@
        '(1 2 3 4 5)
        (sum-of-prefixes '(1 1 1 1 1)))
 
+(test-section "scramble")
+(test* "(scramble '(1 1 1 3 4 2 1 1 9 2))"
+       '(1 1 1 1 1 4 1 1 1 9)
+       (scramble '(1 1 1 3 4 2 1 1 9 2)))
+(test* "(scramble '(1 2 3 4 5 6 7 8 9))"
+       '(1 1 1 1 1 1 1 1)
+       (scramble '(1 2 3 4 5 6 7 8 9)))
+
 (test-end)
