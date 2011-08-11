@@ -19,4 +19,12 @@
 ;; p9
 (test* "(two-in-a-row? '(b d e i i a g))" #t (two-in-a-row? '(b d e i i a g)))
 
+(test-section "sum-of-prefixes")
+(test* "(sum-of-prefixes '(2 1 9 17 0))"
+       '(2 3 12 29 29)
+       (sum-of-prefixes '(2 1 9 17 0)))
+(test* "(sum-of-prefixes '(1 1 1 1 1))"
+       '(1 2 3 4 5)
+       (sum-of-prefixes '(1 1 1 1 1)))
+
 (test-end)
