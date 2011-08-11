@@ -17,9 +17,15 @@
     (cond ((null? lat) #f)
           (else (eq? (car lat) a)))))
 
-;; アトムが連続して2回現れるかどうかを調べる
+;; p6
+(define is-first-b?
+  (lambda (a lat)
+    (cond ((null? lat) #f)
+          (else (or (eq? (car lat) a)
+                    (two-in-a-row? lat))))))
+
+;; アトムが連続して2回現れるかどうかを調べる(改訂版)
 (define two-in-a-row?
   (lambda (lat)
     (cond ((null? lat) #f)
-          (else (or (is-first? (car lat) (cdr lat))
-                    (two-in-a-row? (cdr lat)))))))
+          (else (is-first-b? (car lat) (cdr lat))))))
