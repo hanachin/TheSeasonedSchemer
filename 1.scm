@@ -10,20 +10,6 @@
   (lambda (x)
     (- x 1)))
 
-;; p5
-;; aとlatの最初の要素が同じかどうかを判定する補助関数
-(define is-first?
-  (lambda (a lat)
-    (cond ((null? lat) #f)
-          (else (eq? (car lat) a)))))
-
-;; p6
-(define is-first-b?
-  (lambda (a lat)
-    (cond ((null? lat) #f)
-          (else (or (eq? (car lat) a)
-                    (two-in-a-row? lat))))))
-
 ;; p7
 (define two-in-a-row-b?
   (lambda (preceding lat)
