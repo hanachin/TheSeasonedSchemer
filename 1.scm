@@ -10,6 +10,10 @@
   (lambda (x)
     (- x 1)))
 
+(define one?
+  (lambda (x)
+    (= x 1)))
+
 ;; p7
 (define two-in-a-row-b?
   (lambda (preceding lat)
@@ -37,3 +41,25 @@
   (lambda (tup)
     (cond ((null? tup) '())
           (else (sum-of-prefixes-b 0 tup)))))
+
+;; p13
+(define pick
+  (lambda (n lat)
+    (cond ((one? n) (car lat))
+          (else (pick (sub1 n) (cdr lat))))))
+
+;; p13
+(define scramble-b
+  (lambda (tup rev-pre)
+    (cond ((null? tup) '())
+          (else (cons (pick (car tup)
+                            (cons (car tup)
+                                  rev-pre))
+                      (scramble-b (cdr tup)
+                                  (cons (car tup)
+                                        rev-pre)))))))
+
+;; p14
+(define scramble
+  (lambda (tup)
+    (scramble-b tup '())))
