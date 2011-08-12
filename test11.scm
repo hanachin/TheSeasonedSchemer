@@ -1,8 +1,8 @@
 (use gauche.test)
 (add-load-path ".")
-(load "1")
+(load "11")
 
-(test-start "chapter 1")
+(test-start "chapter 11")
 
 (test-section "two-in-a-row?")
 ;; p3
