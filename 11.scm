@@ -27,13 +27,13 @@
 
 ;; p34
 (define sum-of-prefixes
-  (lambda (tup)
-    (letrec
-        ((S (lambda (sss tup)
-              (cond ((null? tup) '())
-                    (else (cons (+ sss (car tup))
-                                (S (+ sss (car tup))
-                                   (cdr tup))))))))
+  (letrec
+      ((S (lambda (sss tup)
+            (cond ((null? tup) '())
+                  (else (cons (+ sss (car tup))
+                              (S (+ sss (car tup))
+                                 (cdr tup))))))))
+    (lambda (tup)
       (S 0 tup))))
 
 ;; p13
@@ -44,11 +44,11 @@
 
 ;; p35
 (define scramble
-  (lambda (tup)
-    (letrec
-        ((P (lambda (tup rp)
-              (cond ((null? tup) '())
-                    (else (cons (pick (car tup) (cons (car tup) rp))
-                                (P (cdr tup)
-                                   (cons (car tup) rp))))))))
+  (letrec
+      ((P (lambda (tup rp)
+            (cond ((null? tup) '())
+                  (else (cons (pick (car tup) (cons (car tup) rp))
+                              (P (cdr tup)
+                                 (cons (car tup) rp))))))))
+    (lambda (tup)
       (P tup '()))))
