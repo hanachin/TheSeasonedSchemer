@@ -1,0 +1,16 @@
+;; Y combinator
+(define Y
+  (lambda (le)
+    ((lambda (f) (f f))
+     (lambda (f) (le (lambda (x) ((f f) x)))))))
+
+;; p17
+(define multirember
+  (lambda (a lat)
+    ((Y (lambda (mr)
+          (lambda (lat)
+            (cond ((null? lat) '())
+                  ((eq? a (car lat)) (mr (cdr lat)))
+                  (else (cons (car lat)
+                              (mr (cdr lat))))))))
+     lat)))
