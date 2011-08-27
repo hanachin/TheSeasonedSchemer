@@ -25,19 +25,16 @@
       (cond ((null? lat) #f)
             (else (W (car lat) (cdr lat)))))))
 
-;; p10
-(define sum-of-prefixes-b
-  (lambda (sonssf tup)
-    (cond ((null? tup) '())
-          (else (cons (+ sonssf (car tup))
-                      (sum-of-prefixes-b (+ sonssf (car tup))
-                                         (cdr tup)))))))
-
-;; p11
+;; p34
 (define sum-of-prefixes
   (lambda (tup)
-    (cond ((null? tup) '())
-          (else (sum-of-prefixes-b 0 tup)))))
+    (letrec
+        ((S (lambda (sss tup)
+              (cond ((null? tup) '())
+                    (else (cons (+ sss (car tup))
+                                (S (+ sss (car tup))
+                                   (cdr tup))))))))
+      (S 0 tup))))
 
 ;; p13
 (define pick
