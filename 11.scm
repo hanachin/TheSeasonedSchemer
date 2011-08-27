@@ -42,18 +42,13 @@
     (cond ((one? n) (car lat))
           (else (pick (sub1 n) (cdr lat))))))
 
-;; p13
-(define scramble-b
-  (lambda (tup rev-pre)
-    (cond ((null? tup) '())
-          (else (cons (pick (car tup)
-                            (cons (car tup)
-                                  rev-pre))
-                      (scramble-b (cdr tup)
-                                  (cons (car tup)
-                                        rev-pre)))))))
-
-;; p14
+;; p35
 (define scramble
   (lambda (tup)
-    (scramble-b tup '())))
+    (letrec
+        ((P (lambda (tup rp)
+              (cond ((null? tup) '())
+                    (else (cons (pick (car tup) (cons (car tup) rp))
+                                (P (cdr tup)
+                                   (cons (car tup) rp))))))))
+      (P tup '()))))
