@@ -14,3 +14,13 @@
                      (else (cons (car lat)
                                  (mr (cdr lat))))))))
       (mr lat))))
+
+;; p27
+(define member?
+  (lambda (a lat)
+    (letrec
+        ((yes? (lambda (l)
+                 (cond ((null? l) #f)
+                       ((eq? a (car l)) #t)
+                       (else (yes? (cdr l)))))))
+         (yes? lat))))
