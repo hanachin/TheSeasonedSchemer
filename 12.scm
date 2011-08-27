@@ -25,13 +25,20 @@
                        (else (yes? (cdr l)))))))
          (yes? lat))))
 
-;; p28 letrec version
+;; p32 letrec version
 (define union
   (lambda (set1 set2)
     (letrec
         ((U (lambda (set)
               (cond ((null? set) set2)
-                    ((member? (car set) set2) (U (cdr set)))
+                    ((M? (car set) set2) (U (cdr set)))
                     (else (cons (car set)
-                                (U (cdr set))))))))
+                                (U (cdr set)))))))
+         (M? (lambda (a lat)
+               (letrec
+                   ((N? (lambda (lat)
+                          (cond ((null? lat) #f)
+                                ((eq? a (car lat)) #t)
+                                (else (N? (cdr lat)))))))
+                 (N? lat)))))
       (U set1))))
