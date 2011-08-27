@@ -23,4 +23,10 @@
        #t
        (member? 'ice '(salad greens with pears brie cheese frozen ice yogurt)))
 
+(test-section "union")
+;; p27
+(test* "(union '(tomatoes and macaroni casserole) '(macaroni and cheese))"
+       '(tomatoes casserole macaroni and cheese)
+       (union '(tomatoes and macaroni casserole) '(macaroni and cheese)))
+
 (test-end)
