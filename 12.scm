@@ -4,13 +4,14 @@
     ((lambda (f) (f f))
      (lambda (f) (le (lambda (x) ((f f) x)))))))
 
-;; p17
+;; p18 letrec version
 (define multirember
   (lambda (a lat)
-    ((Y (lambda (mr)
-          (lambda (lat)
-            (cond ((null? lat) '())
-                  ((eq? a (car lat)) (mr (cdr lat)))
-                  (else (cons (car lat)
-                              (mr (cdr lat))))))))
+    ((letrec
+         ((mr (lambda (lat)
+                (cond ((null? lat) '())
+                      ((eq? a (car lat)) (mr (cdr lat)))
+                      (else (cons (car lat)
+                                  (mr (cdr lat))))))))
+       mr)
      lat)))
