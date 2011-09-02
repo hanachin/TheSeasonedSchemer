@@ -52,3 +52,13 @@
                     (else (cons (car lat)
                                 (R (cdr lat))))))))
       (R lat))))
+
+;; p54
+(define rember-beyond-first
+  (lambda (a lat)
+    (letrec
+        ((R (lambda (lat)
+              (cond ((null? lat) '())
+                    ((eq? (car lat) a) '())
+                    (else (cons (car lat) (R (cdr lat))))))))
+      (R lat))))
