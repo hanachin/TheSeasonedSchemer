@@ -41,3 +41,14 @@
                         (else (J s1)))))))
         (cond ((null? lset) '())
               (else (A lset)))))))
+
+;; p52
+(define rember
+  (lambda (a lat)
+    (letrec
+        ((R (lambda (lat)
+              (cond ((null? lat) '())
+                    ((eq? (car lat) a) (cdr lat))
+                    (else (cons (car lat)
+                                (R (cdr lat))))))))
+      (R lat))))
