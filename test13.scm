@@ -22,4 +22,24 @@
        '()
        (intersectall '((3 mangoes and) () (3 diet hamburgers))))
 
+(test-section "rember-beyond-first")
+;; p52
+(test* "(rember-beyond-first 'roots '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice))"
+       '(noodles spaghetti spatzle bean-thread)
+       (rember-beyond-first 'roots '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice)))
+;; p53
+(test* "(rember-beyond-first 'others '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice))"
+       '(noodles spaghetti spatzle bean-thread roots potatoes yam)
+       (rember-beyond-first 'others '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice)))
+(test* "(rember-beyond-first 'sweetthing '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice))"
+       '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice)
+       (rember-beyond-first 'sweetthing '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice)))
+(test* "(rember-beyond-first 'desserts '(cookies chocolate mints caramel delight ginger snaps desserts \
+chocolate mousse vanilla ice cream German chocolate cake more desserts \
+gingerbreadman chocolate chip brownies))"
+       '(cookies chocolate mints caramel delight ginger snaps)
+       (rember-beyond-first 'desserts '(cookies chocolate mints caramel delight ginger snaps desserts
+                                                chocolate mousse vanilla ice cream German chocolate cake more desserts
+                                                gingerbreadman chocolate chip brownies)))
+       
 (test-end)
