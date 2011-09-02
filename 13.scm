@@ -63,7 +63,7 @@
                     (else (cons (car lat) (R (cdr lat))))))))
       (R lat))))
 
-;; p 54
+;; p 57
 (define rember-upto-last
   (lambda (a lat)
     (let/cc skip
