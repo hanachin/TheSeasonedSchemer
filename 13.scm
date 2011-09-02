@@ -20,7 +20,7 @@
       (cond ((null? set2) '())
             (else (I set1))))))
 
-;; p49
+;; p50
 (define intersectall
   (lambda (lset)
     (let/cc hop
@@ -37,7 +37,7 @@
                                 ((member? (car s1) s2)
                                  (cons (car s1) (J (cdr s1))))
                                 (else (J (cdr s1)))))))
-                  (cond ((null? s2) '())
+                  (cond ((null? s2) (hop '()))
                         (else (J s1)))))))
         (cond ((null? lset) '())
               (else (A lset)))))))
