@@ -62,3 +62,15 @@
                     ((eq? (car lat) a) '())
                     (else (cons (car lat) (R (cdr lat))))))))
       (R lat))))
+
+;; p 54
+(define rember-upto-last
+  (lambda (a lat)
+    (let/cc skip
+      (letrec
+          ((R (lambda (lat)
+                (cond ((null? lat) '())
+                      ((eq? (car lat) a) (skip (R (cdr lat))))
+                      (else (cons (car lat)
+                                  (R (cdr lat))))))))
+        (R lat)))))
