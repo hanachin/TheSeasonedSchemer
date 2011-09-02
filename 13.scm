@@ -20,7 +20,7 @@
       (cond ((null? set2) '())
             (else (I set1))))))
 
-;; p41
+;; p49
 (define intersectall
   (lambda (lset)
     (let/cc hop
@@ -28,7 +28,37 @@
           ((A (lambda (lset)
                 (cond ((null? (car lset)) (hop '()))
                       ((null? (cdr lset)) (car lset))
-                      (else (intersect (car lset)
-                                       (A (cdr lset))))))))
+                      (else (I (car lset)
+                               (A (cdr lset)))))))
+           (I (lambda (s1 s2)
+                (letrec
+                    ((J (lambda (s1)
+                          (cond ((null? s1) '())
+                                ((member? (car s1) s2)
+                                 (cons (car s1) (J (cdr s1))))
+                                (else (J (cdr s1)))))))
+                  (cond ((null? s2) '())
+                        (else (J s1)))))))
+        (cond ((null? lset) '())
+              (else (A lset)))))))
+
+(define intersectall
+  (lambda (lset)
+    (let/cc hop
+      (letrec
+          ((A (lambda (lset)
+                (cond ((null? (car lset)) (hop '()))
+                      ((null? (cdr lset)) (car lset))
+                      (else (I (car lset)
+                               (A (cdr lset)))))))
+           (I (lambda (s1 s2)
+                (letrec
+                    ((J (lambda (s1)
+                          (cond ((null? s1) '())
+                                ((member? (car s1) s2)
+                                 (cons (car s1) (J (cdr s1))))
+                                (else (J (cdr s1)))))))
+                  (cond ((null? s2) '())
+                        (else (J s1)))))))
         (cond ((null? lset) '())
               (else (A lset)))))))
