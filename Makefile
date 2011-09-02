@@ -13,3 +13,6 @@ endif
 
 12:
 	$(SCM_CMD) test12.scm
+
+13:
+	$(SCM_CMD) test13.scm
