@@ -19,9 +19,10 @@
                     (else (I (cdr set)))))))
       (I set1))))
 
-;; p37
+;; p38
 (define intersectall
   (lambda (lset)
-    (cond ((null? (cdr lset)) (car lset))
+    (cond ((null? lset) '())
+          ((null? (cdr lset)) (car lset))
           (else (intersect (car lset)
                            (intersectall (cdr lset)))))))
