@@ -8,16 +8,17 @@
                        (else (yes? (cdr l)))))))
          (yes? lat))))
 
-;; p37
+;; p48
 (define intersect
   (lambda (set1 set2)
     (letrec
-        ((I (lambda (set)
-              (cond ((null? set) '())
-                    ((member? (car set) set2)
-                     (cons (car set) (I (cdr set))))
-                    (else (I (cdr set)))))))
-      (I set1))))
+        ((I (lambda (set1)
+              (cond ((null? set1) '())
+                    ((member? (car set1) set2)
+                     (cons (car set1) (I (cdr set1))))
+                    (else (I (cdr set1)))))))
+      (cond ((null? set2) '())
+            (else (I set1))))))
 
 ;; p41
 (define intersectall
