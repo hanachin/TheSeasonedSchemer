@@ -41,5 +41,22 @@ gingerbreadman chocolate chip brownies))"
        (rember-beyond-first 'desserts '(cookies chocolate mints caramel delight ginger snaps desserts
                                                 chocolate mousse vanilla ice cream German chocolate cake more desserts
                                                 gingerbreadman chocolate chip brownies)))
-       
+
+(test-section "rember-upto-last")
+;; p54
+(test* "(rember-upto-last 'roots '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice))"
+       '(potatoes yam others rice)
+       (rember-upto-last 'roots '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice)))
+(test* "(rember-upto-last 'sweetthing '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice))"
+       '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice)
+       (rember-upto-last 'sweetthing '(noodles spaghetti spatzle bean-thread roots potatoes yam others rice)))
+;; p55
+(test* "(rember-upto-last 'cookies '(cookies chocolate mints caramel delight ginger snaps desserts \
+chocolate mousse vanilla ice cream German chocolate cake more cookies \
+gingerbreadman chocolate chip brownies))"
+       '(gingerbreadman chocolate chip brownies)
+       (rember-upto-last 'cookies '(cookies chocolate mints caramel delight ginger snaps desserts
+                                            chocolate mousse vanilla ice cream German chocolate cake more cookies
+                                            gingerbreadman chocolate chip brownies)))
+
 (test-end)
