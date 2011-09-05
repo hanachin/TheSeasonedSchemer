@@ -14,7 +14,7 @@
 
 (define eqlist? equal?)
 
-;; p67
+;; p68
 (define rember*
   (lambda (a l)
     (letrec
@@ -25,10 +25,8 @@
                            (else (cons (car l)
                                        (R (cdr l))))))
                     (else
-                     (cond ((eqlist? (R (car l))
-                                     (car l))
-                            (cons (car l)
-                                  (R (cdr l))))
-                           (else (cons (R (car l))
-                                       (cdr l)))))))))
+                     (let ((av (R (car l))))
+                       (cond ((eqlist? (car l) av)
+                              (cons (car l) (R (cdr l))))
+                             (else (cons av (cdr l))))))))))
       (R l))))
