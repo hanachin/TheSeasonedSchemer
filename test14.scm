@@ -12,10 +12,10 @@
 (test-section "rember*")
 ;; p67
 (test* "(rember* 'salad '((Swedish rye) (French (mustard salad turkey)) salad))"
-       '((Swedish rye) (French (mustard turkey)))
+       '((Swedish rye) (French (mustard turkey)) salad)
        (rember* 'salad '((Swedish rye) (French (mustard salad turkey)) salad)))
 (test* "(rember* 'meat '((pasta meat) pasta (noodles meat sauce) meat tomatoes))"
-       '((pasta) pasta (noodles sauce) tomatoes)
+       '((pasta) pasta (noodles meat sauce) meat tomatoes)
        (rember* 'meat '((pasta meat) pasta (noodles meat sauce) meat tomatoes)))
 
 (test-end)
