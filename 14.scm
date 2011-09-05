@@ -17,15 +17,18 @@
 ;; p67
 (define rember*
   (lambda (a l)
-    (cond ((null? l) '())
-          ((atom? (car l))
-           (cond ((eq? (car l) a) (cdr l))
-                 (else (cons (car l)
-                             (rember* a (cdr l))))))
-          (else
-           (cond ((eqlist? (rember* a (car l))
-                           (car l))
-                  (cons (car l)
-                        (rember* a (cdr l))))
-                 (else (cons (rember* a (car l))
-                             (cdr l))))))))
+    (letrec
+        ((R (lambda (l)
+              (cond ((null? l) '())
+                    ((atom? (car l))
+                     (cond ((eq? (car l) a) (cdr l))
+                           (else (cons (car l)
+                                       (R (cdr l))))))
+                    (else
+                     (cond ((eqlist? (R (car l))
+                                     (car l))
+                            (cons (car l)
+                                  (R (cdr l))))
+                           (else (cons (R (car l))
+                                       (cdr l)))))))))
+      (R l))))
