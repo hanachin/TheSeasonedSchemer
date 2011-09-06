@@ -2,15 +2,18 @@
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
 
-;; p66
+;; p78
+(define lm
+  (lambda (l out)
+    (cond ((null? l) '())
+          ((atom? (car l)) (out (car l)))
+          (else
+           (let ()
+             (lm (car l) out)
+             (lm (cdr l) out))))))
 (define leftmost
   (lambda (l)
-    (cond ((null? l) '())
-          ((atom? (car l)) (car l))
-          (else
-           (let ((a (leftmost (car l))))
-             (cond ((atom? a) a)
-                   (else (leftmost (cdr l)))))))))
+    (let/cc skip (lm l skip))))
 
 (define eqlist? equal?)
 
