@@ -35,7 +35,7 @@
   (lambda (n)
     (+ n 1)))
 
-;; p69
+;; p75
 (define depth*
   (lambda (l)
     (cond ((null? l) 1)
@@ -44,5 +44,4 @@
           (else
            (let ((a (add1 (depth* (car l))))
                  (d (depth* (cdr l))))
-             (cond ((> d a) d)
-                   (else a)))))))
+             (if (> d a) d a))))))
