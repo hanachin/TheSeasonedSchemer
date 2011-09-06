@@ -30,5 +30,9 @@
 (test* "(depth* '(c (b (a b) a) a))"
        3
        (depth* '(c (b (a b) a) a)))
+;; p71
+(test* "(depth* '(() ((bitter butter) (makes) (batter (bitter))) butter))"
+       4
+       (depth* '(() ((bitter butter) (makes) (batter (bitter))) butter)))
 
 (test-end)
