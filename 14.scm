@@ -15,7 +15,7 @@
 (define eqlist? equal?)
 
 ;; p68
-(define rember*
+(define rember1*
   (lambda (a l)
     (letrec
         ((R (lambda (l)
