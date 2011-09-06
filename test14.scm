@@ -18,4 +18,17 @@
        '((pasta) pasta (noodles meat sauce) meat tomatoes)
        (rember1* 'meat '((pasta meat) pasta (noodles meat sauce) meat tomatoes)))
 
+(test-section "depth*")
+;; p69
+(test* "(depth* '((pickled) peppers (peppers pickled)))"
+       2
+       (depth* '((pickled) peppers (peppers pickled))))
+;; p70
+(test* "(depth* '(margarine ((bitter butter) (makes) (batter (bitter))) butter))"
+       4
+       (depth* '(margarine ((bitter butter) (makes) (batter (bitter))) butter)))
+(test* "(depth* '(c (b (a b) a) a))"
+       3
+       (depth* '(c (b (a b) a) a)))
+
 (test-end)
