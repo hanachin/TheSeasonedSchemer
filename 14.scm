@@ -35,13 +35,12 @@
   (lambda (n)
     (+ n 1)))
 
-;; p75
+;; p76
 (define depth*
   (lambda (l)
     (cond ((null? l) 1)
           ((atom? (car l))
            (depth* (cdr l)))
           (else
-           (let ((a (add1 (depth* (car l))))
-                 (d (depth* (cdr l))))
-             (if (> d a) d a))))))
+           (max (add1 (depth* (car l)))
+                (depth* (cdr l)))))))
