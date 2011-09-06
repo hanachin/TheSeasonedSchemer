@@ -16,3 +16,6 @@ endif
 
 13:
 	$(SCM_CMD) test13.scm
+
+14:
+	$(SCM_CMD) test14.scm
