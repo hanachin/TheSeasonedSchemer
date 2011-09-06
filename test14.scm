@@ -8,6 +8,7 @@
 (test* "(leftmost '(((a) b) (c d)))" 'a (leftmost '(((a) b) (c d))))
 (test* "(leftmost '(((a) ()) () (e)))" 'a (leftmost '(((a) ()) () (e))))
 (test* "(leftmost '(((() a) ())))" 'a (leftmost '(((() a) ()))))
+(test* "(leftmost '(((a)) b (c)))" 'a (leftmost '(((a)) b (c))))
 
 (test-section "rember1*")
 ;; p67
