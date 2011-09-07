@@ -60,5 +60,5 @@
                      (rm a (cdr l) oh))))
           (else
            (if (atom? (let/cc oh (rm a (car l) oh)))
-               (cons (car l) (rm (cdr l) oh))
+               (cons (car l) (rm a (cdr l) oh))
                (cons (rm a (car l) 0) (cdr l)))))))
