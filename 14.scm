@@ -48,3 +48,17 @@
           (else
            (max (add1 (depth* (car l)))
                 (depth* (cdr l)))))))
+
+;; p86
+(define rm
+  (lambda (a l oh)
+    (cond ((null? l) (oh 'no))
+          ((atom? (car l))
+           (if (eq? (car l) a)
+               (cdr l)
+               (cons (car l)
+                     (rm a (cdr l) oh))))
+          (else
+           (if (atom? (let/cc oh (rm a (car l) oh)))
+               (cons (car l) (rm (cdr l) oh))
+               (cons (rm a (car l) 0) (cdr l)))))))
