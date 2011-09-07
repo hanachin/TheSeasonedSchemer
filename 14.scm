@@ -18,23 +18,6 @@
 
 (define eqlist? equal?)
 
-;; p68
-(define rember1*
-  (lambda (a l)
-    (letrec
-        ((R (lambda (l)
-              (cond ((null? l) '())
-                    ((atom? (car l))
-                     (cond ((eq? (car l) a) (cdr l))
-                           (else (cons (car l)
-                                       (R (cdr l))))))
-                    (else
-                     (let ((av (R (car l))))
-                       (cond ((eqlist? (car l) av)
-                              (cons (car l) (R (cdr l))))
-                             (else (cons av (cdr l))))))))))
-      (R l))))
-
 (define add1
   (lambda (n)
     (+ n 1)))
@@ -62,3 +45,10 @@
            (if (atom? (let/cc oh (rm a (car l) oh)))
                (cons (car l) (rm a (cdr l) oh))
                (cons (rm a (car l) 0) (cdr l)))))))
+
+;; p88
+(define rember1*
+  (lambda (a l)
+    (if (atom? (let/cc oh (rm a l oh)))
+        l
+        (rm a l '()))))
