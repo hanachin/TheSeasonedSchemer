@@ -32,6 +32,14 @@
            (max (add1 (depth* (car l)))
                 (depth* (cdr l)))))))
 
+;; p89
+(define-macro (try x a b)
+  (let1 success (gensym)
+    `(let/cc ,success
+       (let/cc ,x
+         (,success ,a))
+       ,b)))
+
 ;; p86
 (define rm
   (lambda (a l oh)
@@ -47,10 +55,7 @@
                  (cons (car l) (rm a (cdr l) oh))
                  (cons new-car (cdr l))))))))
 
-;; p88
+;; p89
 (define rember1*
   (lambda (a l)
-    (let ((new-l (let/cc oh (rm a l oh))))
-      (if (atom? new-l)
-          l
-          new-l))))
+    (try oh (rm a l oh) l)))
