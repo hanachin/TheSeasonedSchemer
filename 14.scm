@@ -40,7 +40,7 @@
          (,success ,a))
        ,b)))
 
-;; p86
+;; p89
 (define rm
   (lambda (a l oh)
     (cond ((null? l) (oh 'no))
@@ -50,10 +50,9 @@
                (cons (car l)
                      (rm a (cdr l) oh))))
           (else
-           (let ((new-car (let/cc oh (rm a (car l) oh))))
-             (if (atom? new-car)
-                 (cons (car l) (rm a (cdr l) oh))
-                 (cons new-car (cdr l))))))))
+           (try oh2
+                (cons (rm a (car l) oh2) (cdr l))
+                (cons (car l) (rm a (cdr l) oh)))))))
 
 ;; p89
 (define rember1*
