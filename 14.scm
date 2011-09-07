@@ -42,13 +42,15 @@
                (cons (car l)
                      (rm a (cdr l) oh))))
           (else
-           (if (atom? (let/cc oh (rm a (car l) oh)))
-               (cons (car l) (rm a (cdr l) oh))
-               (cons (rm a (car l) 0) (cdr l)))))))
+           (let ((new-car (let/cc oh (rm a (car l) oh))))
+             (if (atom? new-car)
+                 (cons (car l) (rm a (cdr l) oh))
+                 (cons new-car (cdr l))))))))
 
 ;; p88
 (define rember1*
   (lambda (a l)
-    (if (atom? (let/cc oh (rm a l oh)))
-        l
-        (rm a l '()))))
+    (let ((new-l (let/cc oh (rm a l oh))))
+      (if (atom? new-l)
+          l
+          new-l))))
