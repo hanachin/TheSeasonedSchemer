@@ -1,0 +1,133 @@
+gosh> (define x
+        (cons 'chicago
+              (cons 'pizza '())))
+x
+gosh> x
+(chicago pizza)
+gosh> (set! x 'gone)
+gone
+gosh> x
+gone
+gosh> (set! x 'skins)
+skins
+gosh> (define gourmet
+        (lambda (food)
+          (cons food (cons x '()))))
+gourmet
+gosh> x
+skins
+gosh> (cons x '())
+(skins)
+gosh> (gourmet 'onion)
+(onion skins)
+gosh> (set! x 'rings)
+rings
+gosh> (gourmet 'onion)
+(onion rings)
+gosh> (define gourmand
+        (lambda (food)
+          (set! x food)
+          (cons food (cons x '()))))
+gourmand
+gosh> (gourmand 'potato)
+(potato potato)
+gosh> x
+potato
+gosh> (gourmand 'rice)
+(rice rice)
+gosh> x
+rice
+gosh> (define diner
+        (lambda (food)
+          (cons 'milkshake (cons food '()))))
+diner
+gosh> (define dinerR
+        (lambda (food)
+          (set! x food)
+          (cons 'milkshake (cons food '()))))
+dinerR
+gosh> (dinerR 'onion)
+(milkshake onion)
+gosh> x
+onion
+gosh> (dinerR 'pecanpie)
+(milkshake pecanpie)
+gosh> x
+pecanpie
+gosh> (gourmand 'onion)
+(onion onion)
+gosh> (define omnivore
+        (let ((x 'minestrone))
+          (lambda (food)
+            (set! x food)
+            (cons food (cons x '())))))
+omnivore
+gosh> 'minestrone
+minestrone
+gosh> (omnivore 'bouillabaisse)
+(bouillabaisse bouillabaisse)
+gosh> (define gobbler
+        (let ((x 'minestrone))
+          (lambda (food)
+            (set! x food)
+            (cons food (cons x '())))))
+gobbler
+gosh> (gobbler 'gumbo)
+(gumbo gumbo)
+gosh> (define nibbler
+        (lambda (food)
+          (let ((x 'donut))
+            (set! x food)
+            (cons food (cons x '())))))
+nibbler
+gosh> (nibbler 'cheerio)
+(cheerio cheerio)
+gosh> (define food 'none)
+food
+gosh> (define glutton
+        (lambda (x)
+          (set! food x)
+          (cons 'more (cons x (cons 'more (cons x '()))))))
+glutton
+gosh> (glutton 'garlic)
+(more garlic more garlic)
+gosh> food
+garlic
+gosh> x
+onion
+gosh> (define chez-nous
+        (lambda ()
+          (set! food x)
+          (set! x food)))
+chez-nous
+gosh> food
+garlic
+gosh> x
+onion
+gosh> (chez-nous)
+onion
+gosh> food
+onion
+gosh> x
+onion
+gosh> (define chez-nous
+        (lambda ()
+          (let ((a food))
+            (set! food x)
+            (set! x a))))
+chez-nous
+gosh> (glutton 'garlic)
+(more garlic more garlic)
+gosh> food
+garlic
+gosh> (gourmand 'potato)
+(potato potato)
+gosh> x
+potato
+gosh> (chez-nous)
+garlic
+gosh> food
+potato
+gosh> x
+garlic
+gosh> 
