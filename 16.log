@@ -1,0 +1,322 @@
+$ gosh
+gosh> (define sweet-tooth
+        (lambda (food)
+          (cons food
+            (cons 'cake '()))))
+sweet-tooth
+gosh> (define last 'angelfood)
+last
+gosh> (sweet-tooth 'chocolate)
+(chocolate cake)
+gosh> last
+angelfood
+gosh> (sweet-tooth 'fruit)
+(fruit cake)
+gosh> last
+angelfood
+gosh> (define sweet-toothL
+        (lambda (food)
+          (set! last food)
+          (cons food (cons 'cake '()))))
+sweet-toothL
+gosh> (sweet-toothL 'chocolate)
+(chocolate cake)
+gosh> last
+chocolate
+gosh> (sweet-toothL 'fruit)
+(fruit cake)
+gosh> last
+fruit
+gosh> (sweet-toothL 'cheese)
+(cheese cake)
+gosh> (sweet-toothL 'carrot)
+(carrot cake)
+gosh> (define ingredients '())
+ingredients
+gosh> (define sweet-toothR
+        (lambda (food)
+          (set! ingredients (cons food ingredients))
+          (cons food (cons 'cake '()))))
+sweet-toothR
+gosh> (sweet-toothR 'chocolate)
+(chocolate cake)
+gosh> ingredients
+(chocolate)
+gosh> (sweet-toothR 'fruit)
+(fruit cake)
+gosh> ingredients
+(fruit chocolate)
+gosh> (sweet-toothR 'cheese)
+(cheese cake)
+gosh> ingredients
+(cheese fruit chocolate)
+gosh> (sweet-toothR 'carrot)
+(carrot cake)
+gosh> ingredients
+(carrot cheese fruit chocolate)
+gosh> (define sub1 (lambda (n) (- n 1)))
+sub1
+gosh> (define deep
+        (lambda (m)
+          (cond ((zero? m) 'pizza)
+                (else (cons (deep (sub1 m))
+                           '())))))
+deep
+gosh> (deep 3)
+(((pizza)))
+gosh> (deep 7)
+(((((((pizza)))))))
+gosh> (deep 0)
+pizza
+gosh> (define Ns '())
+Ns
+gosh> (define deepR
+        (lambda (n)
+          (set! Ns (cons n Ns))
+          (deep n)))
+deepR
+gosh> (define Rs '())
+Rs
+gosh> (define Ns '())
+Ns
+gosh> (define deepR
+        (lambda (n)
+          (set! Rs (cons (deep n) Rs))
+          (set! Ns (cons n Ns))
+          (deep n)))
+deepR
+gosh> (define deepR
+        (lambda (n)
+          (let ((result (deep n)))
+            (set! Rs (cons result Rs))
+            (set! Ns (cons n Ns))
+            result)))
+deepR
+gosh> (deepR 3)
+(((pizza)))
+gosh> Ns
+(3)
+gosh> Rs
+((((pizza))))
+gosh> (deepR 5)
+(((((pizza)))))
+gosh> Ns
+(5 3)
+gosh> Rs
+((((((pizza))))) (((pizza))))
+gosh> (deepR 3)
+(((pizza)))
+gosh> Ns
+(3 5 3)
+gosh> Rs
+((((pizza))) (((((pizza))))) (((pizza))))
+gosh> (define find
+        (lambda (n Ns Rs)
+          (letrec
+            ((A (lambda (ns rs)
+                  (cond ((= n (car ns)) (car rs))
+                        (else (A (cdr ns) (cdr rs)))))))
+            (A Ns Rs))))
+find
+gosh> (find 3 Ns Rs)
+(((pizza)))
+gosh> (find 5 Ns Rs)
+(((((pizza)))))
+gosh> (define member? member)
+member?
+gosh> (define deepM
+        (lambda (n)
+          (if (member? n Ns)
+              (find n Ns Rs)
+              (deepR n))))
+deepM
+gosh> Ns
+(3 5 3)
+gosh> Rs
+((((pizza))) (((((pizza))))) (((pizza))))
+gosh> (set! Ns (cdr Ns))
+(5 3)
+gosh> (set! Rs (cdr Rs))
+((((((pizza))))) (((pizza))))
+gosh> Ns
+(5 3)
+gosh> Rs
+((((((pizza))))) (((pizza))))
+gosh> (define deepM
+        (lambda (n)
+          (if (member? n Ns)
+              (find n Ns Rs)
+              (let ((result (deep n)))
+                (set! Rs (cons result Rs))
+                (set! Ns (cons n Ns))
+                result))))
+deepM
+gosh> (deepM 3)
+(((pizza)))
+gosh> Ns
+(5 3)
+gosh> (deepM 6)
+((((((pizza))))))
+gosh> Rs
+(((((((pizza)))))) (((((pizza))))) (((pizza))))
+gosh> (define deep
+        (lambda (m)
+          (cond ((zero? m) 'pizza)
+                (else (cons (deepM (sub1 m))
+                            '())))))
+deep
+gosh> (deepM 9)
+(((((((((pizza)))))))))
+gosh> Ns
+(9 8 7 6 5 3)
+gosh> (define deepM
+        (let ((Rs '())
+              (Ns '()))
+          (lambda (n)
+            (if (member? n Ns)
+                (find n Ns Rs)
+                (let ((result (deep n)))
+                  (set! Rs (cons result Rs))
+                  (set! Ns (cons n Ns))
+                  result)))))
+deepM
+gosh> (deepM 16)
+((((((((((((((((pizza))))))))))))))))
+gosh> (define find
+        (lambda (n Ns Rs)
+          (letrec
+            ((A (lambda (ns rs)
+                  (cond ((null? ns) #f)
+                        ((= (car ns) n) (car rs))
+                        (else (A (cdr ns) (cdr rs)))))))
+            (A Ns Rs))))
+find
+gosh> (define deepM
+        (let ((Rs '())
+              (Ns '()))
+          (lambda (n)
+            (if (eq? (find n Ns Rs) #f)
+                (let ((result (deep n)))
+                  (set! Rs (cons result Rs))
+                  (set! Ns (cons n Ns))
+                  result)
+                (find n Ns Rs)))))
+deepM
+gosh> (define deepM
+        (let ((Rs '())
+              (Ns '()))
+          (lambda (n)
+            (let ((exists (find n Ns Rs)))
+              (if (eq? exists #f)
+                  (let ((result (deep n)))
+                    (set! Rs (cons result Rs))
+                    (set! Ns (cons n Ns))
+                    result)
+                  exists)))))
+deepM
+gosh> (deepM 16)
+((((((((((((((((pizza))))))))))))))))
+gosh> (deepM 16)
+((((((((((((((((pizza))))))))))))))))
+gosh> (define add1 (cut + <> 1))
+gosh> (define length
+        (lambda (l)
+          (cond ((null? l) 0)
+                (else (add1 (length (cdr l)))))))
+length
+gosh> (define length (lambda (l) 0))
+length
+gosh> (set! length
+        (lambda (l)
+          (cond ((null? l) 0)
+                (else (add1 (length (cdr l)))))))
+#<closure #f>
+gosh> (length '())
+0
+gosh> (length '(1))
+1
+gosh> (length '(1 2 3))
+3
+gosh> (define length
+        (let ((h (lambda (l) 0)))
+          (set! h
+            (lambda (l)
+              (cond ((null? l) 0)
+                    (else (add1 (h (cdr l)))))))
+          h))
+length
+gosh> (length '(1 2 3))
+3
+gosh> (define L
+        (lambda (length)
+          (lambda (l)
+            (cond ((null? l) 0)
+                  (else (add1 (length (cdr l))))))))
+L
+gosh> (define length
+        (let ((h (lambda (l) 0)))
+          (set! h
+            (L (lambda (arg) (h arg))))
+          h))
+length
+gosh> (length '(1 2 3))
+3
+gosh> (define length
+        (let ((h 0))
+          (set! h (L h))))
+length
+gosh> (length '(1 2 3))
+*** ERROR: invalid application: (0 (2 3))
+Stack Trace:
+_______________________________________
+  0  length
+
+gosh> (define length
+        (let ((h 0))
+          (set! h (L (lambda (arg) (h arg))))
+          h))
+length
+gosh> (length '(1 2 3))
+3
+gosh> (define Y!
+        (lambda (L)
+          (let ((h (lambda (l) '())))
+            (set! h (L (lambda (arg) (h arg))))
+            h)))
+Y!
+gosh> ((Y! L) '(1 2 3 4 5))
+5
+gosh> (define Y-bang
+        (lambda (f)
+          (letrec
+            ((h (f (lambda (arg) (h arg)))))
+            h)))
+Y-bang
+gosh> (define length (Y! L))
+length
+gosh> (define biz
+        (let ((x 0))
+          (lambda (f)
+            (set! x (add1 x))
+            (lambda (a)
+              (if (= a x)
+                  0
+                  (f a))))))
+biz
+gosh> (define Y
+        (lambda (le)
+          ((lambda (f)
+             (f f))
+           (lambda (f)
+             (le (lambda (arg) ((f f) arg)))))))
+Y
+gosh> ((Y L) '(1 2 3 4))
+4
+gosh> ((Y biz) 5)
+0
+gosh> ((Y! biz) 5)
+  C-c C-c*** UNHANDLED-SIGNAL-ERROR: unhandled signal 2 (SIGINT)
+Stack Trace:
+_______________________________________
+gosh> (exit)
+bash-3.2$ 
