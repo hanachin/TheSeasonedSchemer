@@ -294,6 +294,22 @@ gosh> (define Y-bang
 Y-bang
 gosh> (define length (Y! L))
 length
+gosh> (define atom?
+        (lambda (x)
+          (and (not (pair? x)) (not (null? x)))))
+atom?
+gosh> (define D
+        (lambda (depth*)
+          (lambda (s)
+            (cond ((null? s) 1)
+                  ((atom? (car s)) (depth* (cdr s)))
+                  (else (max (add1 (depth* (car s)))
+                             (depth* (cdr s))))))))
+D
+gosh> (define depth* (Y! D))
+depth*
+gosh> (depth* '(margarine ((bitter butter) (makes) (batter (bitter))) butter))
+4
 gosh> (define biz
         (let ((x 0))
           (lambda (f)
